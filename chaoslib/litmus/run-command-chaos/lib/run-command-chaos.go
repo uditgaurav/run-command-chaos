@@ -187,6 +187,7 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 	var envDetails common.ENVDetails
 	envDetails.SetEnv("APP_NAMESPACE", experimentsDetails.AppNS).
 		SetEnv("PORT", strconv.Itoa(experimentsDetails.Port)).
+		SetEnv("CPU_CORES", strconv.Itoa(experimentsDetails.Cpu)).
 		SetEnv("PRIVATE_SSH_FILE_PATH", experimentsDetails.PrivateSshFilePath).
 		SetEnv("PASSWORD", experimentsDetails.Password).
 		SetEnv("USERNAME", experimentsDetails.Username).
