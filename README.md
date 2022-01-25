@@ -48,3 +48,5 @@ Following are the details of run command chaos:
 ## Limitations
 
 Proper Cleanup: We need to have a cleanup strategy if the chaos terminates in-between or if the chaos process remain in the system even after the chaos completion.
+
+**NOTE:** The experiment are test on Azure VMs
