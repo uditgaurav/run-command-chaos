@@ -1,6 +1,8 @@
-## Run Command Chaos
+# Run Command Chaos
 
 Following are the details of run command chaos:
+
+## Experiments
 
 <table>
   <tr>
@@ -42,3 +44,7 @@ Following are the details of run command chaos:
     <td>TBD</td>
   </tr>
 </table>
+
+## Limitations
+
+Proper Cleanup: We need to have a cleanup strategy if the chaos terminates in-between or if the chaos process remain in the system even after the chaos completion.
