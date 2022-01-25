@@ -7,9 +7,9 @@
 <th> Documentation Link </th>
 </tr>
 <tr>
- <td> Kubelet Service Kill </td>
- <td> This experiment causes kubelet service kill gracefully for a certain chaos duration. The experiment aims to verify resiliency of applications whose replicas may be evicted or becomes unreachable on account on nodes turning unschedulable (Not Ready) due to kubelet service kill. </td>
+ <td> Run Command Chaos </td>
+ <td> This experiment helps to run different chaos scenarios on a remote VM through SSH connectivity. This experiment aims to check the resilience of an application running on a remote VM also the impact of infra failure on the application.
+ </td>
  <td>  <a href="https://litmuschaos.github.io/litmus/experiments/categories/nodes/kubelet-service-kill/"> Here </a> </td>
  </tr>
  </table>
-
