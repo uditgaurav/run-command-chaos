@@ -33,6 +33,7 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.Cpu, _ = strconv.Atoi(types.Getenv("CPU_CORES", "2"))
 	experimentDetails.Username = types.Getenv("USERNAME", "")
 	experimentDetails.Password = types.Getenv("PASSWORD", "")
+	experimentDetails.Ip = types.Getenv("IP", "")
 	experimentDetails.PrivateSshFilePath = types.Getenv("PRIVATE_SSH_FILE_PATH", "")
 	experimentDetails.Port, _ = strconv.Atoi(types.Getenv("PORT", "22"))
 
