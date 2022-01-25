@@ -190,7 +190,8 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 		SetEnv("CPU_CORES", strconv.Itoa(experimentsDetails.Cpu)).
 		SetEnv("PRIVATE_SSH_FILE_PATH", experimentsDetails.PrivateSshFilePath).
 		SetEnv("PASSWORD", experimentsDetails.Password).
-		SetEnv("USERNAME", experimentsDetails.Username).
+		SetEnv("IP", experimentsDetails.Ip).
+		SetEnv("USER", experimentsDetails.Username).
 		SetEnv("TOTAL_CHAOS_DURATION", strconv.Itoa(experimentsDetails.ChaosDuration)).
 		SetEnvFromDownwardAPI("v1", "metadata.name")
 
