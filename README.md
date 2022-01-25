@@ -20,7 +20,7 @@ Following are the details of run command chaos:
   
   <tr>
     <td>memory-chaos</td>
-    <td>tc commands</td>
+    <td>stress-ng on the target VM</td>
     <td>TBD</a></td>
     <td>TBD</td>
     <td>TBD</td>
@@ -28,7 +28,7 @@ Following are the details of run command chaos:
   
   <tr>
     <td>network-latency</td>
-    <td></td>
+    <td>sch_netem kernel module instllated <br> tc commands</td>
     <td>TBD</a></td>
     <td>TBD</td>
     <td>TBD</td>
@@ -36,7 +36,7 @@ Following are the details of run command chaos:
   
    <tr>
     <td>network-delay</td>
-    <td>tc commands</td>
+    <td>sch_netem kernel module instllated <br> tc commands</td>
     <td>TBD</a></td>
     <td>TBD</td>
     <td>TBD</td>
