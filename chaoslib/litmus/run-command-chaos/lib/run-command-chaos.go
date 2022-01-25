@@ -1,7 +1,6 @@
 package lib
 
 import (
-
 	clients "github.com/litmuschaos/litmus-go/pkg/clients"
 	"github.com/litmuschaos/litmus-go/pkg/events"
 	experimentTypes "github.com/litmuschaos/litmus-go/pkg/generic/run-command-chaos/types"
@@ -14,22 +13,17 @@ import (
 	"github.com/sirupsen/logrus"
 	apiv1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"strconv"
 )
 
 // PrepareRunCommandChaos contains prepration steps before chaos injection
 func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetails, clients clients.ClientSets, resultDetails *types.ResultDetails, eventsDetails *types.EventDetails, chaosDetails *types.ChaosDetails) error {
 
 	var err error
-	if experimentsDetails.TargetNode == "" {
-		//Select node for run-command-chaos
-		experimentsDetails.TargetNode, err = common.GetNodeName(experimentsDetails.AppNS, experimentsDetails.AppLabel, experimentsDetails.NodeLabel, clients)
-		if err != nil {
-			return err
-		}
-	}
 
-	log.InfoWithValues("[Info]: Details of node under chaos injection", logrus.Fields{
-		"NodeName": experimentsDetails.TargetNode,
+
+	log.InfoWithValues("[Info]: Details of run chaos experiment tunables", logrus.Fields{
+		"CPU CORES": experimentsDetails.Cpu,
 	})
 
 	experimentsDetails.RunID = common.GetRunID()
@@ -41,7 +35,7 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 	}
 
 	if experimentsDetails.EngineName != "" {
-		msg := "Injecting " + experimentsDetails.ExperimentName + " chaos on " + experimentsDetails.TargetNode + " node"
+		msg := "Injecting " + experimentsDetails.ExperimentName + " chaos on " + experimentsDetails.Ip + " vm"
 		types.SetEngineEventAttributes(eventsDetails, types.ChaosInject, msg, "Normal", chaosDetails)
 		events.GenerateEvents(eventsDetails, clients, chaosDetails, "ChaosEngine")
 	}
@@ -53,7 +47,7 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 	}
 
 	// Creating the helper pod to perform node memory hog
-	if err = createHelperPod(experimentsDetails, clients, chaosDetails, experimentsDetails.TargetNode); err != nil {
+	if err = createHelperPod(experimentsDetails, clients, chaosDetails); err != nil {
 		return errors.Errorf("unable to create the helper pod, err: %v", err)
 	}
 
@@ -66,7 +60,7 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 		return errors.Errorf("helper pod is not in running state, err: %v", err)
 	}
 
-	common.SetTargets(experimentsDetails.TargetNode, "targeted", "node", chaosDetails)
+	common.SetTargets(experimentsDetails.Ip, "targeted", "vm", chaosDetails)
 
 	// run the probes during chaos
 	if len(resultDetails.ProbeDetails) != 0 {
@@ -76,12 +70,6 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 		}
 	}
 
-	// Checking for the node to be in not-ready state
-	log.Info("[Status]: Check for the node to be in NotReady state")
-	if err = status.CheckNodeNotReadyState(experimentsDetails.TargetNode, experimentsDetails.Timeout, experimentsDetails.Delay, clients); err != nil {
-		common.DeleteHelperPodBasedOnJobCleanupPolicy(experimentsDetails.ExperimentName+"-helper-"+experimentsDetails.RunID, appLabel, chaosDetails, clients)
-		return errors.Errorf("application node is not in NotReady state, err: %v", err)
-	}
 
 	// Wait till the completion of helper pod
 	log.Info("[Wait]: Waiting till the completion of the helper pod")
@@ -107,7 +95,7 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 }
 
 // createHelperPod derive the attributes for helper pod and create the helper pod
-func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clients clients.ClientSets, chaosDetails *types.ChaosDetails, appNodeName string) error {
+func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clients clients.ClientSets, chaosDetails *types.ChaosDetails) error {
 
 	privileged := true
 	terminationGracePeriodSeconds := int64(experimentsDetails.TerminationGracePeriodSeconds)
@@ -122,7 +110,6 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 		Spec: apiv1.PodSpec{
 			RestartPolicy:                 apiv1.RestartPolicyNever,
 			ImagePullSecrets:              chaosDetails.ImagePullSecrets,
-			NodeName:                      appNodeName,
 			TerminationGracePeriodSeconds: &terminationGracePeriodSeconds,
 			Volumes: []apiv1.Volume{
 				{
@@ -152,9 +139,10 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 					},
 					Args: []string{
 						"-c",
-						"bash /litmus/cpu-chaos.sh",
+						"sudo chmod 777 ./litmus/cpu-chaos.sh && ./litmus/cpu-chaos.sh",
 					},
 					Resources: chaosDetails.Resources,
+					Env:       getPodEnv(experimentsDetails),
 					VolumeMounts: []apiv1.VolumeMount{
 						{
 							Name:      "bus",
@@ -190,6 +178,22 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 
 	_, err := clients.KubeClient.CoreV1().Pods(experimentsDetails.ChaosNamespace).Create(helperPod)
 	return err
+}
+
+
+// getPodEnv derive all the env required for the helper pod
+func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.EnvVar {
+
+	var envDetails common.ENVDetails
+	envDetails.SetEnv("APP_NAMESPACE", experimentsDetails.AppNS).
+		SetEnv("PORT", strconv.Itoa(experimentsDetails.Port)).
+		SetEnv("PRIVATE_SSH_FILE_PATH", experimentsDetails.PrivateSshFilePath).
+		SetEnv("PASSWORD", experimentsDetails.Password).
+		SetEnv("USERNAME", experimentsDetails.Username).
+		SetEnv("TOTAL_CHAOS_DURATION", strconv.Itoa(experimentsDetails.ChaosDuration)).
+		SetEnvFromDownwardAPI("v1", "metadata.name")
+
+	return envDetails.ENV
 }
 
 func ptrint64(p int64) *int64 {

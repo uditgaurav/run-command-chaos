@@ -21,11 +21,16 @@ type ExperimentDetails struct {
 	ChaosPodName                  string
 	AuxiliaryAppInfo              string
 	RunID                         string
-	TargetNode                    string
-	NodeLabel                     string
 	Timeout                       int
 	Delay                         int
 	LIBImage                      string
 	LIBImagePullPolicy            string
 	TargetContainer               string
+	Username                      string
+	Password         			  string
+	Ip              			  string
+	Cpu            				  int
+	PrivateSshFilePath 			  string
+	Port int
+	
 }

@@ -12,7 +12,6 @@ RUN export GOOS=${TARGETOS} && \
     export GOARCH=${TARGETARCH}
 
 RUN CGO_ENABLED=0 go build -o /output/experiments ./bin/experiment
-RUN CGO_ENABLED=0 go build -o /output/helpers ./bin/helper
 
 FROM alpine:3.14.2 AS dep
 
@@ -33,4 +32,4 @@ COPY --from=dep /usr/bin/sudo /usr/bin/
 COPY --from=dep /sbin/tc /sbin/
 
 #Copying Necessary Files
-COPY ./pkg/scripts/cpu-chaos.sh ./litmus/
+COPY ./pkg/utils/scripts/cpu-chaos.sh ./litmus/

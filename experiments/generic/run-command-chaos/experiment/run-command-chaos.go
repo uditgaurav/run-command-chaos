@@ -15,7 +15,6 @@ import (
 	"github.com/litmuschaos/litmus-go/pkg/status"
 	"github.com/litmuschaos/litmus-go/pkg/types"
 	"github.com/litmuschaos/litmus-go/pkg/utils/common"
-	"github.com/sirupsen/logrus"
 )
 
 // RunCommandChaos inject the run-command-chaos chaos
@@ -61,13 +60,6 @@ func RunCommandChaos(clients clients.ClientSets) {
 	types.SetResultEventAttributes(&eventsDetails, types.AwaitedVerdict, msg, "Normal", &resultDetails)
 	events.GenerateEvents(&eventsDetails, clients, &chaosDetails, "ChaosResult")
 
-	//DISPLAY THE APP INFORMATION
-	log.InfoWithValues("The application information is as follows", logrus.Fields{
-		"Node Label":     experimentsDetails.NodeLabel,
-		"Target Node":    experimentsDetails.TargetNode,
-		"Chaos Duration": experimentsDetails.ChaosDuration,
-	})
-
 	// Calling AbortWatcher go routine, it will continuously watch for the abort signal and generate the required events and result
 	go common.AbortWatcher(experimentsDetails.ExperimentName, clients, &resultDetails, &chaosDetails, &eventsDetails)
 
@@ -91,16 +83,16 @@ func RunCommandChaos(clients clients.ClientSets) {
 		}
 	}
 
-	// Checking the status of target nodes
-	log.Info("[Status]: Getting the status of target nodes")
-	if err := status.CheckNodeStatus(experimentsDetails.TargetNode, experimentsDetails.Timeout, experimentsDetails.Delay, clients); err != nil {
-		log.Errorf("Target nodes are not in the ready state, err: %v", err)
-		failStep := "[pre-chaos]: Failed to verify the status of nodes, err: " + err.Error()
-		types.SetEngineEventAttributes(&eventsDetails, types.PreChaosCheck, "NUT: Not Ready", "Warning", &chaosDetails)
-		events.GenerateEvents(&eventsDetails, clients, &chaosDetails, "ChaosEngine")
-		result.RecordAfterFailure(&chaosDetails, &resultDetails, failStep, clients, &eventsDetails)
-		return
-	}
+	// // Checking the status of target nodes
+	// log.Info("[Status]: Getting the status of target nodes")
+	// if err := status.CheckNodeStatus(experimentsDetails.TargetNode, experimentsDetails.Timeout, experimentsDetails.Delay, clients); err != nil {
+	// 	log.Errorf("Target nodes are not in the ready state, err: %v", err)
+	// 	failStep := "[pre-chaos]: Failed to verify the status of nodes, err: " + err.Error()
+	// 	types.SetEngineEventAttributes(&eventsDetails, types.PreChaosCheck, "NUT: Not Ready", "Warning", &chaosDetails)
+	// 	events.GenerateEvents(&eventsDetails, clients, &chaosDetails, "ChaosEngine")
+	// 	result.RecordAfterFailure(&chaosDetails, &resultDetails, failStep, clients, &eventsDetails)
+	// 	return
+	// }
 
 	if experimentsDetails.EngineName != "" {
 		// marking AUT as running, as we already checked the status of application under test
@@ -164,13 +156,13 @@ func RunCommandChaos(clients clients.ClientSets) {
 		}
 	}
 
-	// Checking the status of target nodes
-	log.Info("[Status]: Getting the status of target nodes")
-	if err := status.CheckNodeStatus(experimentsDetails.TargetNode, experimentsDetails.Timeout, experimentsDetails.Delay, clients); err != nil {
-		log.Warnf("Target nodes are not in the ready state, you may need to manually recover the node, err: %v", err)
-		types.SetEngineEventAttributes(&eventsDetails, types.PostChaosCheck, "NUT: Not Ready", "Warning", &chaosDetails)
-		events.GenerateEvents(&eventsDetails, clients, &chaosDetails, "ChaosEngine")
-	}
+	// // Checking the status of target nodes
+	// log.Info("[Status]: Getting the status of target nodes")
+	// if err := status.CheckNodeStatus(experimentsDetails.TargetNode, experimentsDetails.Timeout, experimentsDetails.Delay, clients); err != nil {
+	// 	log.Warnf("Target nodes are not in the ready state, you may need to manually recover the node, err: %v", err)
+	// 	types.SetEngineEventAttributes(&eventsDetails, types.PostChaosCheck, "NUT: Not Ready", "Warning", &chaosDetails)
+	// 	events.GenerateEvents(&eventsDetails, clients, &chaosDetails, "ChaosEngine")
+	// }
 
 	if experimentsDetails.EngineName != "" {
 		// marking AUT as running, as we already checked the status of application under test
