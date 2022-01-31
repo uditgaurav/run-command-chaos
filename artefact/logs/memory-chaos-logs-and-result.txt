@@ -1,0 +1,234 @@
+
+Chaos Result
+=============
+
+metadata:
+  name: run-command-chaoswfr9r-run-command-chaos
+  namespace: litmus
+  uid: 090d664b-cff1-4cab-9ea2-b09a00f4b835
+  resourceVersion: "236638"
+  generation: 2
+  creationTimestamp: 2022-01-31T18:46:49Z
+  labels:
+    app.kubernetes.io/component: experiment-job
+    app.kubernetes.io/part-of: litmus
+    app.kubernetes.io/version: latest
+    chaosUID: ef3f2bd1-4a50-4c1b-b411-7b34593d4ce6
+    controller-uid: 98938369-1024-4c8b-946f-9f56baf3337d
+    job-name: run-command-chaos-6cbca4
+    name: run-command-chaos
+  managedFields:
+    - manager: experiments
+      operation: Update
+      apiVersion: litmuschaos.io/v1alpha1
+      time: 2022-01-31T18:46:49Z
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:app.kubernetes.io/component: {}
+            f:app.kubernetes.io/part-of: {}
+            f:app.kubernetes.io/version: {}
+            f:chaosUID: {}
+            f:controller-uid: {}
+            f:job-name: {}
+            f:name: {}
+        f:spec:
+          .: {}
+          f:engine: {}
+          f:experiment: {}
+        f:status:
+          .: {}
+          f:experimentStatus: {}
+          f:history: {}
+spec:
+  engine: run-command-chaoswfr9r
+  experiment: run-command-chaos
+status:
+  experimentStatus:
+    phase: Completed
+    verdict: Pass
+    failStep: N/A
+    probeSuccessPercentage: "100"
+  history:
+    passedRuns: 1
+    failedRuns: 0
+    stoppedRuns: 0
+    targets:
+      - name: ec2-3-8-99-170.eu-west-2.compute.amazonaws.com
+        kind: vm
+        chaosStatus: targeted
+        
+----------------
+
+Helper pod Logs
+===============
+
+[Info]: Starting stress-ng process for Memory chaos...
+PRIVATE_SSH_FILE_PATH: /mnt/vedant-k3s-test.pem
+[Info]: Connection information, IP: ec2-3-8-99-170.eu-west-2.compute.amazonaws.com, USER: ec2-user, PORT: 22
+[Info]: Chaos Command: stress-ng --vm 2 --vm-bytes 5000M --timeout 120
+Warning: Permanently added 'ec2-3-8-99-170.eu-west-2.compute.amazonaws.com' (ED25519) to the list of known hosts.
+stress-ng: info:  [2241] dispatching hogs: 2 vm
+stress-ng: info:  [2241] successful run completed in 120.01s (2 mins, 0.01 secs)
+[Info]: Chaos Completed ...
+
+--------------
+
+
+W0131 18:46:39.672360       1 client_config.go:552] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+2022/01/31 18:46:39 
+
+ChaosEngine Name : run-command-chaoswfr9r
+
+2022/01/31 18:46:39 Created Resource Details: 
+{run-command-chaoswfr9r litmuschaos.io v1alpha1 ChaosEngine litmus }
+W0131 18:46:39.742489       1 client_config.go:552] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+2022/01/31 18:46:39 Starting Chaos Checker in 1min
+2022/01/31 18:47:39 Checking if Engine Completed or Stopped
+2022/01/31 18:48:39 Checking if Engine Completed or Stopped
+2022/01/31 18:49:39 Checking if Engine Completed or Stopped
+2022/01/31 18:49:39 [*] ENGINE COMPLETED
+W0131 18:46:45.079519       1 client_config.go:541] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+time='2022-01-31T18:46:45Z' level=info msg='Experiment Name: run-command-chaos'
+time='2022-01-31T18:46:45Z' level=info msg='[PreReq]: Getting the ENV for the run-command-chaos experiment'
+time='2022-01-31T18:46:47Z' level=info msg='[PreReq]: Updating the chaos result of run-command-chaos experiment (SOT)'
+time='2022-01-31T18:46:49Z' level=info msg='[Status]: Verify that the AUT (Application Under Test) is running (pre-chaos)'
+time='2022-01-31T18:46:49Z' level=info msg='[Status]: No appLabels provided, skipping the application status checks'
+time='2022-01-31T18:46:49Z' level=info msg='[Info]: Details of run chaos experiment tunables' CPU CORES=2
+time='2022-01-31T18:46:49Z' level=info msg='[Status]: Checking the status of the helper pod'
+time='2022-01-31T18:46:53Z' level=info msg='run-command-chaos-helper-azngpb helper pod is in Running state'
+time='2022-01-31T18:46:55Z' level=info msg='[Wait]: Waiting till the completion of the helper pod'
+time='2022-01-31T18:46:55Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:46:56Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:46:57Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:46:58Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:46:59Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:00Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:01Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:02Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:03Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:04Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:05Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:06Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:07Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:08Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:09Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:10Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:11Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:12Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:13Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:14Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:15Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:16Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:17Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:18Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:19Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:20Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:21Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:22Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:23Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:24Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:25Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:26Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:27Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:28Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:29Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:30Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:31Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:32Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:33Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:34Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:35Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:36Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:37Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:38Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:39Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:40Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:41Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:42Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:43Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:44Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:45Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:46Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:47Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:48Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:49Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:50Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:51Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:52Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:53Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:54Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:55Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:56Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:57Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:58Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:47:59Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:00Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:01Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:02Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:03Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:04Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:05Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:06Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:07Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:08Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:09Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:10Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:11Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:12Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:13Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:14Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:15Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:16Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:17Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:18Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:19Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:20Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:21Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:23Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:24Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:25Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:26Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:27Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:28Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:29Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:30Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:31Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:32Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:33Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:34Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:35Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:36Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:37Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:38Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:39Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:40Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:41Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:42Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:43Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:44Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:45Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:46Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:47Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:48Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:49Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:50Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:51Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:52Z' level=info msg='helper pod status: Running'
+time='2022-01-31T18:48:53Z' level=info msg='helper pod status: Succeeded'
+time='2022-01-31T18:48:53Z' level=info msg='[Status]: The running status of Pods are as follows' Status=Succeeded Pod=run-command-chaos-helper-azngpb
+time='2022-01-31T18:48:54Z' level=info msg='[Cleanup]: Deleting the helper pod'
+time='2022-01-31T18:48:56Z' level=info msg='[Confirmation]: run-command-chaos chaos has been injected successfully'
+time='2022-01-31T18:48:56Z' level=info msg='[Status]: Verify that the AUT (Application Under Test) is running (post-chaos)'
+time='2022-01-31T18:48:56Z' level=info msg='[Status]: No appLabels provided, skipping the application status checks'
+time='2022-01-31T18:48:56Z' level=info msg='[The End]: Updating the chaos result of run-command-chaos experiment (EOT)'
+W0131 18:46:40.941179       1 client_config.go:541] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+time='2022-01-31T18:46:40Z' level=info msg='Experiments details are as follows' Experiments List='[run-command-chaos]' Engine Name=run-command-chaoswfr9r appLabels= appNs=litmus appKind= Service Account Name=litmus-admin Engine Namespace=litmus
+time='2022-01-31T18:46:41Z' level=info msg='Getting the ENV Variables'
+time='2022-01-31T18:46:41Z' level=info msg='Preparing to run Chaos Experiment: run-command-chaos'
+time='2022-01-31T18:46:41Z' level=info msg='Started Chaos Experiment Name: run-command-chaos, with Job Name: run-command-chaos-6cbca4'
+time='2022-01-31T18:49:08Z' level=info msg='Chaos Pod Completed, Experiment Name: run-command-chaos, with Job Name: run-command-chaos-6cbca4'
+time='2022-01-31T18:49:10Z' level=info msg='Chaos Engine has been updated with result, Experiment Name: run-command-chaos'
+time='2022-01-31T18:49:10Z' level=info msg='[skip]: skipping the job deletion as jobCleanUpPolicy is set to {}'
