@@ -32,4 +32,4 @@ COPY --from=dep /usr/bin/sudo /usr/bin/
 COPY --from=dep /sbin/tc /sbin/
 
 #Copying Necessary Files
-COPY ./pkg/utils/scripts/cpu-chaos.sh ./litmus/
+COPY ./pkg/utils/scripts/ ./litmus/
