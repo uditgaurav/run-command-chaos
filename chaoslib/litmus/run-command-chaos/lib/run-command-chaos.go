@@ -21,7 +21,6 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 
 	var err error
 
-
 	log.InfoWithValues("[Info]: Details of run chaos experiment tunables", logrus.Fields{
 		"CPU CORES": experimentsDetails.Cpu,
 	})
@@ -69,7 +68,6 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 			return err
 		}
 	}
-
 
 	// Wait till the completion of helper pod
 	log.Info("[Wait]: Waiting till the completion of the helper pod")
@@ -179,7 +177,6 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 	_, err := clients.KubeClient.CoreV1().Pods(experimentsDetails.ChaosNamespace).Create(helperPod)
 	return err
 }
-
 
 // getPodEnv derive all the env required for the helper pod
 func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.EnvVar {

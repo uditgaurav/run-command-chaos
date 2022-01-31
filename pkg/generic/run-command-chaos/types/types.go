@@ -27,10 +27,9 @@ type ExperimentDetails struct {
 	LIBImagePullPolicy            string
 	TargetContainer               string
 	Username                      string
-	Password         			  string
-	Ip              			  string
-	Cpu            				  int
-	PrivateSshFilePath 			  string
-	Port int
-	
+	Password                      string
+	Ip                            string
+	Cpu                           int
+	PrivateSshFilePath            string
+	Port                          int
 }
