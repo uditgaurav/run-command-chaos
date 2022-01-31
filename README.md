@@ -23,24 +23,24 @@ Following are the details of run command chaos:
   <tr>
     <td>memory-chaos</td>
     <td>stress-ng on the target VM</td>
-    <td>TBD</a></td>
-    <td>TBD</td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/memory-chaos.sh">Click Here</a></td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/cpu-chaos-wf.yaml">workflow.yaml</a></td>
     <td>TBD</td>
   </tr>
   
   <tr>
     <td>network-latency</td>
     <td>sch_netem kernel module instllated <br> tc commands</td>
-    <td>TBD</a></td>
-    <td>TBD</td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/network-latency-chaos.sh">Click Here</a></td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/network-latency-chaos-wf.yaml">workflow.yaml</a></td>
     <td>TBD</td>
   </tr>
   
    <tr>
     <td>network-loss</td>
     <td>sch_netem kernel module instllated <br> tc commands</td>
-    <td>TBD</a></td>
-    <td>TBD</td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/network-loss-chaos.sh">Click Here</a></td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/network-loss-chaos-wf.yaml">workflow.yaml</a></td>
     <td>TBD</td>
   </tr>
 </table>
