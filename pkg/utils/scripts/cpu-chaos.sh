@@ -2,10 +2,10 @@
 
 set -e
 
-echo "[Info]: Starting stress-ng process ..."
+echo "[Info]: Starting stress-ng process for CPU chaos..."
 
 echo "PRIVATE_SSH_FILE_PATH: $PRIVATE_SSH_FILE_PATH"
-echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}, PASSWORD: ${PASSWORD}"
+echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}"
 echo "[Info]: Chaos Command: stress-ng --cpu ${CPU_CORES} --timeout ${TOTAL_CHAOS_DURATION}"
 
 if [ -z "$PRIVATE_SSH_FILE_PATH" ]; then

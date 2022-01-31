@@ -36,5 +36,13 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.Ip = types.Getenv("IP", "")
 	experimentDetails.PrivateSshFilePath = types.Getenv("PRIVATE_SSH_FILE_PATH", "")
 	experimentDetails.Port, _ = strconv.Atoi(types.Getenv("PORT", "22"))
+	experimentDetails.ChaosType = types.Getenv("CHAOS_TYPE", "cpu")
+
+	experimentDetails.MemoryConsumption, _ = strconv.Atoi(types.Getenv("MEMORY_CONSUMPTION", "500"))
+	experimentDetails.NumberOfWorkers, _ = strconv.Atoi(types.Getenv("NUMBER_OF_WORKERS", "4"))
+
+	experimentDetails.NetworkLatency, _ = strconv.Atoi(types.Getenv("NETWORK_LATENCY", "2000"))
+	experimentDetails.NetworkPacketLossPercentage, _ = strconv.Atoi(types.Getenv("NETWORK_PACKET_LOSS_PERCENTAGE", "30"))
+	experimentDetails.NetworkInterface = types.Getenv("NETWORK_INTERFACE", "eth0")
 
 }

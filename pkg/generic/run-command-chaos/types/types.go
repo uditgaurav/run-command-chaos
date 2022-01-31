@@ -32,4 +32,10 @@ type ExperimentDetails struct {
 	Cpu                           int
 	PrivateSshFilePath            string
 	Port                          int
+	ChaosType                     string
+	NumberOfWorkers               int
+	MemoryConsumption             int
+	NetworkLatency                int
+	NetworkInterface              string
+	NetworkPacketLossPercentage   int
 }

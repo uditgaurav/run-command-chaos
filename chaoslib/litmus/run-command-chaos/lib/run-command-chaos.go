@@ -19,22 +19,37 @@ import (
 
 // SECRET NAME & MOUNTPATH ARE HARDCODED
 const (
-	secretName      string = "ssh-secret"
-	privateKeyMount string = "/mnt"
+	secretName       string = "ssh-secret"
+	privateKeyMount  string = "/mnt"
 	privateKeySecret string = "private-key-cm-"
 )
-
 
 // PrepareRunCommandChaos contains prepration steps before chaos injection
 func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetails, clients clients.ClientSets, resultDetails *types.ResultDetails, eventsDetails *types.EventDetails, chaosDetails *types.ChaosDetails) error {
 
 	var err error
+	var entrypoint string
 
 	log.InfoWithValues("[Info]: Details of run chaos experiment tunables", logrus.Fields{
 		"CPU CORES": experimentsDetails.Cpu,
 	})
 
 	experimentsDetails.RunID = common.GetRunID()
+
+	switch experimentsDetails.ChaosType {
+	case "cpu":
+		entrypoint = "cpu-chaos.sh"
+	case "memory":
+		entrypoint = "memory-chaos.sh"
+	case "network-latency":
+		entrypoint = "network-latency-chaos.sh"
+	case "network-loss":
+		entrypoint = "network-loss-chaos.sh"
+	case "disk":
+		entrypoint = "disk-chaos.sh"
+	default:
+		return errors.Errorf("%v ChaosType is not supported, the supported types are cpu, memory, network-latency, network-loss & disk")
+	}
 
 	//Waiting for the ramp time before chaos injection
 	if experimentsDetails.RampTime != 0 {
@@ -55,7 +70,7 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 	}
 
 	// Creating the helper pod to perform node memory hog
-	if err = createHelperPod(experimentsDetails, clients, chaosDetails); err != nil {
+	if err = createHelperPod(experimentsDetails, clients, chaosDetails, entrypoint); err != nil {
 		return errors.Errorf("unable to create the helper pod, err: %v", err)
 	}
 
@@ -102,7 +117,7 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 }
 
 // createHelperPod derive the attributes for helper pod and create the helper pod
-func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clients clients.ClientSets, chaosDetails *types.ChaosDetails) error {
+func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clients clients.ClientSets, chaosDetails *types.ChaosDetails, entrpoint string) error {
 
 	privileged := true
 	terminationGracePeriodSeconds := int64(experimentsDetails.TerminationGracePeriodSeconds)
@@ -154,7 +169,7 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 					},
 					Args: []string{
 						"-c",
-						"sudo chmod 777 ./litmus/cpu-chaos.sh && ./litmus/cpu-chaos.sh",
+						"sudo chmod 777 ./litmus/" + entrpoint + " && ./litmus/" + entrpoint,
 					},
 					Resources: chaosDetails.Resources,
 					Env:       getPodEnv(experimentsDetails),
@@ -210,6 +225,11 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 		SetEnv("PASSWORD", experimentsDetails.Password).
 		SetEnv("IP", experimentsDetails.Ip).
 		SetEnv("USER", experimentsDetails.Username).
+		SetEnv("NUMBER_OF_WORKERS", strconv.Itoa(experimentsDetails.NumberOfWorkers)).
+		SetEnv("MEMORY_CONSUMPTION", strconv.Itoa(experimentsDetails.MemoryConsumption)).
+		SetEnv("NETWORK_LATENCY", strconv.Itoa(experimentsDetails.NetworkLatency)).
+		SetEnv("NETWORK_INTERFACE", experimentsDetails.NetworkInterface).
+		SetEnv("NETWORK_PACKET_LOSS_PERCENTAGE", strconv.Itoa(experimentsDetails.NetworkPacketLossPercentage)).
 		SetEnv("TOTAL_CHAOS_DURATION", strconv.Itoa(experimentsDetails.ChaosDuration)).
 		SetEnvFromDownwardAPI("v1", "metadata.name")
 
