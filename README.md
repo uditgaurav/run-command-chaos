@@ -41,7 +41,7 @@ Following are the details of run command chaos:
     <td>sch_netem kernel module instllated <br> tc commands</td>
     <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/network-loss-chaos.sh">Click Here</a></td>
     <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/network-loss-wf.yaml">workflow.yaml</a></td>
-    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/logs/network-loss-logs-and-result.txt">workflow.yaml</a></td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/logs/network-loss-logs-and-result.txt">Logs.txt</a></td>
   </tr>
 </table>
 
