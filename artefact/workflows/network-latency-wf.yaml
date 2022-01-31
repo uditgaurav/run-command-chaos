@@ -188,7 +188,11 @@ spec:
                             - name: CPU_CORES
                               value: "2"
                             - name: CHAOS_TYPE
-                              value: "memory"
+                              value: "network-latency"
+                            - name: NETWORK_LATENCY
+                              value: "2000"
+                            - name: NETWORK_INTERFACE
+                              value: "eth0"
                             - name: PORT
                               value: "22"
                             - name: USERNAME

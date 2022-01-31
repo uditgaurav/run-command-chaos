@@ -188,7 +188,11 @@ spec:
                             - name: CPU_CORES
                               value: "2"
                             - name: CHAOS_TYPE
-                              value: "memory"
+                              value: "network-loss"
+                            - name: NETWORK_PACKET_LOSS_PERCENTAGE
+                              value: "30"
+                            - name: NETWORK_INTERFACE
+                              value: "eth0"
                             - name: PORT
                               value: "22"
                             - name: USERNAME
@@ -198,7 +202,7 @@ spec:
                             - name: IP
                               value: ''
                             - name: PRIVATE_SSH_FILE_PATH
-                              value: ""
+                              value: 
                         probe: []
                   annotationCheck: "false"
       outputs: {}

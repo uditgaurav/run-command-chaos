@@ -185,8 +185,10 @@ spec:
                           env:
                             - name: TOTAL_CHAOS_DURATION
                               value: "60"
-                            - name: CPU_CORES
-                              value: "2"
+                            - name: MEMORY_CONSUMPTION
+                              value: "1000"
+                            - name: NUMBER_OF_WORKERS
+                              value: "1"
                             - name: CHAOS_TYPE
                               value: "memory"
                             - name: PORT
