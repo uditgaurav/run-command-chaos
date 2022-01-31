@@ -24,7 +24,7 @@ Following are the details of run command chaos:
     <td>memory-chaos</td>
     <td>stress-ng on the target VM</td>
     <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/memory-chaos.sh">Click Here</a></td>
-    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/cpu-chaos-wf.yaml">workflow.yaml</a></td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/memory-chaos-wf.yaml">workflow.yaml</a></td>
     <td>TBD</td>
   </tr>
   
@@ -32,7 +32,7 @@ Following are the details of run command chaos:
     <td>network-latency</td>
     <td>sch_netem kernel module instllated <br> tc commands</td>
     <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/network-latency-chaos.sh">Click Here</a></td>
-    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/network-latency-chaos-wf.yaml">workflow.yaml</a></td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/network-latency-wf.yaml">workflow.yaml</a></td>
     <td>TBD</td>
   </tr>
   
@@ -40,7 +40,7 @@ Following are the details of run command chaos:
     <td>network-loss</td>
     <td>sch_netem kernel module instllated <br> tc commands</td>
     <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/network-loss-chaos.sh">Click Here</a></td>
-    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/network-loss-chaos-wf.yaml">workflow.yaml</a></td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/network-loss-wf.yaml">workflow.yaml</a></td>
     <td>TBD</td>
   </tr>
 </table>
