@@ -25,7 +25,7 @@ Following are the details of run command chaos:
     <td>stress-ng on the target VM</td>
     <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/pkg/utils/scripts/memory-chaos.sh">Click Here</a></td>
     <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/workflows/memory-chaos-wf.yaml">workflow.yaml</a></td>
-    <td>TBD</td>
+    <td><a href="https://github.com/uditgaurav/run-command-chaos/blob/master/artefact/logs/memory-chaos-logs-and-result.txt">Logs.txt</a></td>
   </tr>
   
   <tr>
