@@ -184,11 +184,11 @@ spec:
                         components:
                           env:
                             - name: TOTAL_CHAOS_DURATION
-                              value: "60"
+                              value: "120"
                             - name: MEMORY_CONSUMPTION
-                              value: "1000"
+                              value: "5000"
                             - name: NUMBER_OF_WORKERS
-                              value: "1"
+                              value: "2"
                             - name: CHAOS_TYPE
                               value: "memory"
                             - name: PORT
