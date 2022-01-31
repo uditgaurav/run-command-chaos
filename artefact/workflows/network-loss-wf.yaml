@@ -196,7 +196,7 @@ spec:
                             - name: PORT
                               value: "22"
                             - name: USERNAME
-                              value: 'root'
+                              value: 'ec2-user'
                             - name: PASSWORD
                               value: ''
                             - name: IP
