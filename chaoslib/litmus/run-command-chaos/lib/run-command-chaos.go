@@ -1,6 +1,8 @@
 package lib
 
 import (
+	"strconv"
+
 	clients "github.com/litmuschaos/litmus-go/pkg/clients"
 	"github.com/litmuschaos/litmus-go/pkg/events"
 	experimentTypes "github.com/litmuschaos/litmus-go/pkg/generic/run-command-chaos/types"
@@ -13,8 +15,15 @@ import (
 	"github.com/sirupsen/logrus"
 	apiv1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"strconv"
 )
+
+// SECRET NAME & MOUNTPATH ARE HARDCODED
+const (
+	secretName      string = "ssh-secret"
+	privateKeyMount string = "/mnt"
+	privateKeySecret string = "private-key-cm-"
+)
+
 
 // PrepareRunCommandChaos contains prepration steps before chaos injection
 func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetails, clients clients.ClientSets, resultDetails *types.ResultDetails, eventsDetails *types.EventDetails, chaosDetails *types.ChaosDetails) error {
@@ -126,6 +135,14 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 						},
 					},
 				},
+				{
+					Name: privateKeySecret + experimentsDetails.RunID,
+					VolumeSource: apiv1.VolumeSource{
+						Secret: &apiv1.SecretVolumeSource{
+							SecretName: secretName,
+						},
+					},
+				},
 			},
 			Containers: []apiv1.Container{
 				{
@@ -149,6 +166,10 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 						{
 							Name:      "root",
 							MountPath: "/node",
+						},
+						{
+							Name:      privateKeySecret + experimentsDetails.RunID,
+							MountPath: privateKeyMount,
 						},
 					},
 					SecurityContext: &apiv1.SecurityContext{

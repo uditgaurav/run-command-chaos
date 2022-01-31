@@ -14,7 +14,7 @@ if [ -z "$PRIVATE_SSH_FILE_PATH" ]; then
 	"stress-ng --cpu ${CPU_CORES} --timeout ${TOTAL_CHAOS_DURATION}"
     
 else
-    ssh -i "$PRIVATE_SSH_FILE_PATH" ${USER}@${IP} "stress-ng --cpu ${CPU_CORES} --timeout ${TOTAL_CHAOS_DURATION}" 
+    ssh -o StrictHostKeyChecking=no -i "$PRIVATE_SSH_FILE_PATH" ${USER}@${IP} "stress-ng --cpu ${CPU_CORES} --timeout ${TOTAL_CHAOS_DURATION}" 
 fi
 
 echo "[Info]: Chaos Completed ..."

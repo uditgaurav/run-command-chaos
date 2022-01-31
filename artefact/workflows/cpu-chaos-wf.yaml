@@ -2,7 +2,7 @@ kind: Workflow
 apiVersion: argoproj.io/v1alpha1
 metadata:
   name: custom-chaos-workflow-1643138985
-  namespace: ns-4
+  namespace: litmus
   creationTimestamp: null
   labels:
     cluster_id: cc2cb1f5-ce2a-42d8-92ec-158ffdff6aeb
@@ -214,7 +214,7 @@ spec:
   arguments:
     parameters:
       - name: adminModeNamespace
-        value: ns-4
+        value: litmus
   serviceAccountName: argo-chaos
   securityContext:
     runAsUser: 1000
