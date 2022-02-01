@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## NOTE: This Script is made for RHEL based VMs Only, will be enhanced further..
+## NOTE: This Script is made for RHEL based VMs Only
 
 ## array of packages
 declare -a pkgs=("iproute-tc" "stress-ng")
