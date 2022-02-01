@@ -45,4 +45,7 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.NetworkPacketLossPercentage, _ = strconv.Atoi(types.Getenv("NETWORK_PACKET_LOSS_PERCENTAGE", "30"))
 	experimentDetails.NetworkInterface = types.Getenv("NETWORK_INTERFACE", "eth0")
 
+	experimentDetails.FillPercentage, _ = strconv.Atoi(types.Getenv("FILL_PERCENTAGE", "50"))
+	experimentDetails.VolumeMountPath = types.Getenv("VOLUME_MOUNT_PATH", "/")
+
 }

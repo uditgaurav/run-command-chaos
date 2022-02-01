@@ -227,6 +227,8 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 		SetEnv("USER", experimentsDetails.Username).
 		SetEnv("NUMBER_OF_WORKERS", strconv.Itoa(experimentsDetails.NumberOfWorkers)).
 		SetEnv("MEMORY_CONSUMPTION", strconv.Itoa(experimentsDetails.MemoryConsumption)).
+		SetEnv("FILL_PERCENTAGE", strconv.Itoa(experimentsDetails.FillPercentage)).
+		SetEnv("VOLUME_MOUNT_PATH", experimentsDetails.VolumeMountPath).
 		SetEnv("NETWORK_LATENCY", strconv.Itoa(experimentsDetails.NetworkLatency)).
 		SetEnv("NETWORK_INTERFACE", experimentsDetails.NetworkInterface).
 		SetEnv("NETWORK_PACKET_LOSS_PERCENTAGE", strconv.Itoa(experimentsDetails.NetworkPacketLossPercentage)).

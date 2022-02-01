@@ -38,4 +38,6 @@ type ExperimentDetails struct {
 	NetworkLatency                int
 	NetworkInterface              string
 	NetworkPacketLossPercentage   int
+	FillPercentage                int
+	VolumeMountPath               string
 }
