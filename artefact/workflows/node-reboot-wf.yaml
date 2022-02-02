@@ -186,15 +186,7 @@ spec:
                             - name: TOTAL_CHAOS_DURATION
                               value: "120"
                             - name: CHAOS_TYPE
-                              value: "disk"
-                            - name: FILL_PERCENTAGE
-                              value: "50"
-                            - name: DISK_CONSUMPTION
-                              value: "2"
-                            - name: NUMBER_OF_WORKERS
-                              value: "1"
-                            - name: VOLUME_MOUNT_PATH
-                              value: "/"
+                              value: "node-reboot"
                             - name: PORT
                               value: "22"
                             - name: USERNAME
