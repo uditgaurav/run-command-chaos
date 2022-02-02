@@ -46,8 +46,10 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 		entrypoint = "network-loss-chaos.sh"
 	case "disk":
 		entrypoint = "disk-chaos.sh"
+	case "node-reboot":
+		entrypoint = "node-reboot-chaos.sh"
 	default:
-		return errors.Errorf("%v ChaosType is not supported, the supported types are cpu, memory, network-latency, network-loss & disk")
+		return errors.Errorf("%v ChaosType is not supported, the supported types are cpu, memory, network-latency, network-loss, disk & node-reboot")
 	}
 
 	//Waiting for the ramp time before chaos injection
