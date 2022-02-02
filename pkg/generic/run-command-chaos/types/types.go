@@ -41,4 +41,5 @@ type ExperimentDetails struct {
 	FillPercentage                int
 	DiskConsumption               int
 	VolumeMountPath               string
+	RebootCommand                 string
 }

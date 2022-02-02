@@ -48,4 +48,5 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.FillPercentage, _ = strconv.Atoi(types.Getenv("FILL_PERCENTAGE", "50"))
 	experimentDetails.VolumeMountPath = types.Getenv("VOLUME_MOUNT_PATH", "/")
 	experimentDetails.DiskConsumption, _ = strconv.Atoi(types.Getenv("DISK_CONSUMPTION", "2"))
+	experimentDetails.RebootCommand = types.Getenv("REBOOT_COMMAND", "sudo systemctl reboot")
 }

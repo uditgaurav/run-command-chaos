@@ -9,6 +9,10 @@ echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}"
 
 command="sudo systemctl reboot"
 
+if [ -z "$REBOOT_COMMAND" ]; then
+    command="$REBOOT_COMMAND"
+fi
+
 echo "[Info]: Chaos Command: ${command}"
 
 if [ -z "$PRIVATE_SSH_FILE_PATH" ]; then
