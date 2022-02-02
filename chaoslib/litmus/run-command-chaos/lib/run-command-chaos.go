@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"path/filepath"
 	"strconv"
 
 	clients "github.com/litmuschaos/litmus-go/pkg/clients"
@@ -214,7 +215,7 @@ func getVolumeMounts(experimentsDetails *experimentTypes.ExperimentDetails) []ap
 
 	secretVolumeMount := apiv1.VolumeMount{
 		Name:      secretName + experimentsDetails.RunID,
-		MountPath: experimentsDetails.PrivateSshFilePath,
+		MountPath: getMountDirectory(experimentsDetails.PrivateSshFilePath),
 	}
 
 	volumeMounts := []apiv1.VolumeMount{
@@ -257,6 +258,11 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 		SetEnvFromDownwardAPI("v1", "metadata.name")
 
 	return envDetails.ENV
+}
+
+func getMountDirectory(mountPath string) string {
+	dir, _ := filepath.Split(mountPath)
+	return dir
 }
 
 func ptrint64(p int64) *int64 {
