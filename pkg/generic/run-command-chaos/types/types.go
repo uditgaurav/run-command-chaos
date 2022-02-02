@@ -39,5 +39,6 @@ type ExperimentDetails struct {
 	NetworkInterface              string
 	NetworkPacketLossPercentage   int
 	FillPercentage                int
+	DiskConsumption				  int
 	VolumeMountPath               string
 }
