@@ -9,7 +9,7 @@ echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}"
 
 command=""
 
-if [ ! -z "$FILL_PERCENTAGE" ]; then
+if [ "$FILL_PERCENTAGE" -ne 0 ]; then
     command="sudo stress-ng --fallocate ${NUMBER_OF_WORKERS} --fallocate-bytes ${FILL_PERCENTAGE}% --timeout ${TOTAL_CHAOS_DURATION}s --temp-path ${VOLUME_MOUNT_PATH}"
 else
     command="sudo stress-ng --fallocate ${NUMBER_OF_WORKERS} --fallocate-bytes ${DISK_CONSUMPTION}g --timeout ${TOTAL_CHAOS_DURATION}s --temp-path ${VOLUME_MOUNT_PATH}"
