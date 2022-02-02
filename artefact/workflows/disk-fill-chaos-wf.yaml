@@ -192,7 +192,7 @@ spec:
                             - name: NUMBER_OF_WORKERS
                               value: "1"
                             - name: VOLUME_MOUNT_PATH
-                              value: "/dev/"
+                              value: "/"
                             - name: PORT
                               value: "22"
                             - name: USERNAME
