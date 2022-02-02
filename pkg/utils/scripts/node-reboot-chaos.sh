@@ -9,7 +9,7 @@ echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}"
 
 command="sleep 5 && sudo systemctl reboot"
 
-if [ -z "$REBOOT_COMMAND" ]; then
+if [ ! -z "$REBOOT_COMMAND" ]; then
     command="sleep 5 && $REBOOT_COMMAND"
 fi
 
