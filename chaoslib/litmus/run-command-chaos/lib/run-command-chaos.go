@@ -19,9 +19,7 @@ import (
 
 // SECRET NAME & MOUNTPATH ARE HARDCODED
 const (
-	secretName       string = "ssh-secret"
-	privateKeyMount  string = "/mnt"
-	privateKeySecret string = "private-key-cm-"
+	secretName string = "ssh-secret"
 )
 
 // PrepareRunCommandChaos contains prepration steps before chaos injection
@@ -133,32 +131,7 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 			RestartPolicy:                 apiv1.RestartPolicyNever,
 			ImagePullSecrets:              chaosDetails.ImagePullSecrets,
 			TerminationGracePeriodSeconds: &terminationGracePeriodSeconds,
-			Volumes: []apiv1.Volume{
-				{
-					Name: "bus",
-					VolumeSource: apiv1.VolumeSource{
-						HostPath: &apiv1.HostPathVolumeSource{
-							Path: "/var/run",
-						},
-					},
-				},
-				{
-					Name: "root",
-					VolumeSource: apiv1.VolumeSource{
-						HostPath: &apiv1.HostPathVolumeSource{
-							Path: "/",
-						},
-					},
-				},
-				{
-					Name: privateKeySecret + experimentsDetails.RunID,
-					VolumeSource: apiv1.VolumeSource{
-						Secret: &apiv1.SecretVolumeSource{
-							SecretName: secretName,
-						},
-					},
-				},
-			},
+			Volumes:                       getVolumes(experimentsDetails),
 			Containers: []apiv1.Container{
 				{
 					Name:            experimentsDetails.ExperimentName,
@@ -171,22 +144,9 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 						"-c",
 						"sudo chmod 777 ./litmus/" + entrpoint + " && ./litmus/" + entrpoint,
 					},
-					Resources: chaosDetails.Resources,
-					Env:       getPodEnv(experimentsDetails),
-					VolumeMounts: []apiv1.VolumeMount{
-						{
-							Name:      "bus",
-							MountPath: "/var/run",
-						},
-						{
-							Name:      "root",
-							MountPath: "/node",
-						},
-						{
-							Name:      privateKeySecret + experimentsDetails.RunID,
-							MountPath: privateKeyMount,
-						},
-					},
+					Resources:    chaosDetails.Resources,
+					Env:          getPodEnv(experimentsDetails),
+					VolumeMounts: getVolumeMounts(experimentsDetails),
 					SecurityContext: &apiv1.SecurityContext{
 						Privileged: &privileged,
 					},
@@ -209,9 +169,70 @@ func createHelperPod(experimentsDetails *experimentTypes.ExperimentDetails, clie
 			},
 		},
 	}
-
 	_, err := clients.KubeClient.CoreV1().Pods(experimentsDetails.ChaosNamespace).Create(helperPod)
 	return err
+}
+
+func getVolumes(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.Volume {
+
+	secretVolume := apiv1.Volume{
+		Name: secretName + experimentsDetails.RunID,
+		VolumeSource: apiv1.VolumeSource{
+			Secret: &apiv1.SecretVolumeSource{
+				SecretName: secretName,
+			},
+		},
+	}
+
+	volumes := []apiv1.Volume{
+		{
+			Name: "bus",
+			VolumeSource: apiv1.VolumeSource{
+				HostPath: &apiv1.HostPathVolumeSource{
+					Path: "/var/run",
+				},
+			},
+		},
+		{
+			Name: "root",
+			VolumeSource: apiv1.VolumeSource{
+				HostPath: &apiv1.HostPathVolumeSource{
+					Path: "/",
+				},
+			},
+		},
+	}
+
+	if experimentsDetails.PrivateSshFilePath != "" {
+		volumes = append(volumes, secretVolume)
+	}
+
+	return volumes
+}
+
+func getVolumeMounts(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.VolumeMount {
+
+	secretVolumeMount := apiv1.VolumeMount{
+		Name:      secretName + experimentsDetails.RunID,
+		MountPath: experimentsDetails.PrivateSshFilePath,
+	}
+
+	volumeMounts := []apiv1.VolumeMount{
+		{
+			Name:      "bus",
+			MountPath: "/var/run",
+		},
+		{
+			Name:      "root",
+			MountPath: "/node",
+		},
+	}
+
+	if experimentsDetails.PrivateSshFilePath != "" {
+		volumeMounts = append(volumeMounts, secretVolumeMount)
+	}
+
+	return volumeMounts
 }
 
 // getPodEnv derive all the env required for the helper pod
