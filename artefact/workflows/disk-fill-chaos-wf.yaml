@@ -188,7 +188,7 @@ spec:
                             - name: CHAOS_TYPE
                               value: "disk"
                             - name: FILL_PERCENTAGE
-                              value: "50"
+                              value: ""
                             - name: DISK_CONSUMPTION
                               value: "2"
                             - name: NUMBER_OF_WORKERS
