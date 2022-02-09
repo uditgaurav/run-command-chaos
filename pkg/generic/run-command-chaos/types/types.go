@@ -42,4 +42,7 @@ type ExperimentDetails struct {
 	DiskConsumption               int
 	VolumeMountPath               string
 	RebootCommand                 string
+	ListenUrl					  string
+	StreamUrl                     string
+	StreamType                    string
 }

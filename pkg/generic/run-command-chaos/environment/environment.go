@@ -49,4 +49,7 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.VolumeMountPath = types.Getenv("VOLUME_MOUNT_PATH", "/")
 	experimentDetails.DiskConsumption, _ = strconv.Atoi(types.Getenv("DISK_CONSUMPTION", "2"))
 	experimentDetails.RebootCommand = types.Getenv("REBOOT_COMMAND", "")
+	experimentDetails.ListenUrl = types.Getenv("LISTEN_URL", "")
+	experimentDetails.StreamUrl = types.Getenv("STREAM_URL", "")
+	experimentDetails.StreamType= types.Getenv("STREAM_TYPE", "")
 }
