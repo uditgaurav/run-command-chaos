@@ -51,5 +51,5 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.RebootCommand = types.Getenv("REBOOT_COMMAND", "")
 	experimentDetails.ListenUrl = types.Getenv("LISTEN_URL", "")
 	experimentDetails.StreamUrl = types.Getenv("STREAM_URL", "")
-	experimentDetails.StreamType= types.Getenv("STREAM_TYPE", "")
+	experimentDetails.StreamType = types.Getenv("STREAM_TYPE", "")
 }
