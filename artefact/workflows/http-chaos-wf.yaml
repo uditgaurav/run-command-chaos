@@ -188,11 +188,17 @@ spec:
                             - name: CHAOS_TYPE
                               value: "http"
                             - name: LISTEN_URL
-                              value: "localhost:8080"
+                              value: "0.0.0.0:8080"
                             - name: STREAM_URL
-                              value: "google.com:80"
+                              value: "localhost:80"
                             - name: STREAM_TYPE
                               value: "upstream"
+                            - name: TOXIC_TYPE
+                              value: "toggle"
+                            - name: RESET_PEER_TIMEOUT
+                              value: "1000"
+                            - name: TOXIC_LATENCY
+                              value: "1000"
                             - name: PORT
                               value: "22"
                             - name: USERNAME

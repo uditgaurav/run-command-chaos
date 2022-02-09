@@ -53,6 +53,6 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.StreamUrl = types.Getenv("STREAM_URL", "")
 	experimentDetails.StreamType = types.Getenv("STREAM_TYPE", "")
 	experimentDetails.ToxicType = types.Getenv("TOXIC_TYPE", "")
-	experimentDetails.ResetPeerTimeout, _ = strconv.Atoi(types.Getenv("RESEST_PEER_TIMEOUT", ""))
+	experimentDetails.ResetPeerTimeout, _ = strconv.Atoi(types.Getenv("RESET_PEER_TIMEOUT", ""))
 	experimentDetails.ToxicLatency, _ = strconv.Atoi(types.Getenv("TOXIC_LATENCY", ""))
 }
