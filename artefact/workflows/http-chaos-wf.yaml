@@ -186,15 +186,13 @@ spec:
                             - name: TOTAL_CHAOS_DURATION
                               value: "120"
                             - name: CHAOS_TYPE
-                              value: "disk"
-                            - name: FILL_PERCENTAGE
-                              value: ""
-                            - name: DISK_CONSUMPTION
-                              value: "2"
-                            - name: NUMBER_OF_WORKERS
-                              value: "1"
-                            - name: VOLUME_MOUNT_PATH
-                              value: "/"
+                              value: "http-chaos"
+                            - name: LISTEN_URL
+                              value: "localhost:8080"
+                            - name: STREAM_URL
+                              value: "google.com:80"
+                            - name: STREAM_TYPE
+                              value: "upstream"
                             - name: PORT
                               value: "22"
                             - name: USERNAME
