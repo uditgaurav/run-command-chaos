@@ -45,4 +45,7 @@ type ExperimentDetails struct {
 	ListenUrl                     string
 	StreamUrl                     string
 	StreamType                    string
+	ToxicType                     string
+	ResetPeerTimeout              int
+	ToxicLatency                  int
 }

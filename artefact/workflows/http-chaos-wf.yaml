@@ -186,7 +186,7 @@ spec:
                             - name: TOTAL_CHAOS_DURATION
                               value: "120"
                             - name: CHAOS_TYPE
-                              value: "http-chaos"
+                              value: "http"
                             - name: LISTEN_URL
                               value: "localhost:8080"
                             - name: STREAM_URL

@@ -48,7 +48,7 @@ func PrepareRunCommandChaos(experimentsDetails *experimentTypes.ExperimentDetail
 		entrypoint = "disk-chaos.sh"
 	case "node-reboot":
 		entrypoint = "node-reboot-chaos.sh"
-	case "http-chaos":
+	case "http":
 		entrypoint = "http-chaos.sh"
 	default:
 		return errors.Errorf("%v ChaosType is not supported, the supported types are cpu, memory, network-latency, network-loss, disk & node-reboot")
@@ -261,6 +261,9 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 		SetEnv("LISTEN_URL", experimentsDetails.ListenUrl).
 		SetEnv("STREAM_URL", experimentsDetails.StreamUrl).
 		SetEnv("STREAM_TYPE", experimentsDetails.StreamType).
+		SetEnv("TOXIC_TYPE", experimentsDetails.ToxicType).
+		SetEnv("RESET_PEER_TIMEOUT", strconv.Itoa(experimentsDetails.ResetPeerTimeout)).
+		SetEnv("TOXIC_LATENCY", strconv.Itoa(experimentsDetails.ToxicLatency)).
 		SetEnv("DISK_CONSUMPTION", strconv.Itoa(experimentsDetails.DiskConsumption)).
 		SetEnv("NETWORK_PACKET_LOSS_PERCENTAGE", strconv.Itoa(experimentsDetails.NetworkPacketLossPercentage)).
 		SetEnv("TOTAL_CHAOS_DURATION", strconv.Itoa(experimentsDetails.ChaosDuration)).
