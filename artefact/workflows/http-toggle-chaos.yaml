@@ -1,0 +1,236 @@
+kind: Workflow
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: custom-chaos-workflow-1643138985
+  namespace: litmus
+  creationTimestamp: null
+  labels:
+    cluster_id: cc2cb1f5-ce2a-42d8-92ec-158ffdff6aeb
+    subject: custom-chaos-workflow_ns-4
+    workflow_id: bee485d8-a812-43ae-894c-9b0d619100c3
+    workflows.argoproj.io/controller-instanceid: cc2cb1f5-ce2a-42d8-92ec-158ffdff6aeb
+spec:
+  templates:
+    - name: custom-chaos
+      arguments: {}
+      inputs: {}
+      outputs: {}
+      metadata: {}
+      steps:
+        - - name: install-chaos-experiments
+            template: install-chaos-experiments
+            arguments: {}
+        - - name: run-command-chaos
+            template: run-command-chaos
+            arguments: {}
+    - name: install-chaos-experiments
+      arguments: {}
+      inputs:
+        artifacts:
+          - name: run-command-chaos
+            path: /tmp/run-command-chaos.yaml
+            raw:
+              data: |
+                apiVersion: litmuschaos.io/v1alpha1
+                description:
+                  message: |
+                    Detaching an ebs volume from ec2 instance.
+                kind: ChaosExperiment
+                metadata:
+                  name: run-command-chaos
+                  labels:
+                    name: run-command-chaos
+                    app.kubernetes.io/part-of: litmus
+                    app.kubernetes.io/component: chaosexperiment
+                    app.kubernetes.io/version: latest
+                spec:
+                  definition:
+                    scope: Cluster
+                    permissions:
+                      - apiGroups:
+                          - ""
+                        resources:
+                          - pods
+                        verbs:
+                          - create
+                          - delete
+                          - get
+                          - list
+                          - patch
+                          - update
+                          - deletecollection
+                      - apiGroups:
+                          - ""
+                        resources:
+                          - events
+                        verbs:
+                          - create
+                          - get
+                          - list
+                          - patch
+                          - update
+                      - apiGroups:
+                          - ""
+                        resources:
+                          - secrets
+                          - configmaps
+                        verbs:
+                          - get
+                          - list
+                      - apiGroups:
+                          - ""
+                        resources:
+                          - pods/log
+                        verbs:
+                          - get
+                          - list
+                          - watch
+                      - apiGroups:
+                          - ""
+                        resources:
+                          - pods/exec
+                        verbs:
+                          - get
+                          - list
+                          - create
+                      - apiGroups:
+                          - batch
+                        resources:
+                          - jobs
+                        verbs:
+                          - create
+                          - list
+                          - get
+                          - delete
+                          - deletecollection
+                      - apiGroups:
+                          - litmuschaos.io
+                        resources:
+                          - chaosengines
+                          - chaosexperiments
+                          - chaosresults
+                        verbs:
+                          - create
+                          - list
+                          - get
+                          - patch
+                          - update
+                          - delete
+                      - apiGroups:
+                          - ""
+                        resources:
+                          - nodes
+                        verbs:
+                          - get
+                          - list
+                    image: uditgaurav/go-runner:run
+                    imagePullPolicy: IfNotPresent
+                    args:
+                      - -c
+                      - ./experiments -name run-command-chaos
+                    command:
+                      - /bin/bash
+                    env:
+                      - name: TOTAL_CHAOS_DURATION
+                        value: "30"
+                      - name: CHAOS_INTERVAL
+                        value: "30"
+                      - name: LIB_IMAGE
+                        value: uditgaurav/go-runner:run
+                      - name: LIB_IMAGE_PULL_POLICY
+                        value: "IfNotPresent"
+                      - name: RAMP_TIME
+                        value: ""
+                      - name: LIB
+                        value: litmus
+                    labels:
+                      name: run-command-chaos
+                      app.kubernetes.io/part-of: litmus
+                      app.kubernetes.io/component: experiment-job
+                      app.kubernetes.io/version: latest
+      outputs: {}
+      metadata: {}
+      container:
+        name: ""
+        image: litmuschaos/k8s:latest
+        imagePullPolicy: IfNotPresent
+        command:
+          - sh
+          - -c
+        args:
+          - kubectl apply -f /tmp/run-command-chaos.yaml -n
+            {{workflow.parameters.adminModeNamespace}} |  sleep 30
+        resources: {}
+    - name: run-command-chaos
+      arguments: {}
+      inputs:
+        artifacts:
+          - name: run-command-chaos
+            path: /tmp/chaosengine-run-command-chaos.yaml
+            raw:
+              data: |
+                apiVersion: litmuschaos.io/v1alpha1
+                kind: ChaosEngine
+                metadata:
+                  namespace: "{{workflow.parameters.adminModeNamespace}}"
+                  generateName: run-command-chaos
+                  labels:
+                    instance_id: e369bea9-377c-4eac-a817-4668025cf06d
+                    context: run-command-chaos_ns-4
+                    workflow_name: custom-chaos-workflow-1643138985
+                spec:
+                  engineState: active
+                  chaosServiceAccount: litmus-admin
+                  experiments:
+                    - name: run-command-chaos
+                      spec:
+                        components:
+                          env:
+                            - name: TOTAL_CHAOS_DURATION
+                              value: "120"
+                            - name: CHAOS_TYPE
+                              value: "http"
+                            - name: LISTEN_URL
+                              value: "0.0.0.0:8080"
+                            - name: STREAM_URL
+                              value: "localhost:80"
+                            - name: STREAM_TYPE
+                              value: "upstream"
+                            - name: TOXIC_TYPE
+                              value: "toggle"
+                            - name: PORT
+                              value: "22"
+                            - name: USERNAME
+                              value: ''
+                            - name: PASSWORD
+                              value: ''
+                            - name: IP
+                              value: ''
+                            - name: PRIVATE_SSH_FILE_PATH
+                              value: ""
+                        probe: []
+                  annotationCheck: "false"
+      outputs: {}
+      metadata:
+        labels:
+          weight: "10"
+      container:
+        name: ""
+        image: litmuschaos/litmus-checker:latest
+        imagePullPolicy: IfNotPresent
+        args:
+          - -file=/tmp/chaosengine-run-command-chaos.yaml
+          - -saveName=/tmp/engine-name
+        resources: {}
+  entrypoint: custom-chaos
+  arguments:
+    parameters:
+      - name: adminModeNamespace
+        value: litmus
+  serviceAccountName: argo-chaos
+  securityContext:
+    runAsUser: 1000
+    runAsNonRoot: true
+status:
+  ? startedAt
+  ? finishedAt
