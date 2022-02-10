@@ -48,5 +48,5 @@ type ExperimentDetails struct {
 	ToxicType                     string
 	ResetPeerTimeout              int
 	ToxicLatency                  int
-	WaitBeforeAddingToxic		  int
+	WaitBeforeAddingToxic         int
 }
