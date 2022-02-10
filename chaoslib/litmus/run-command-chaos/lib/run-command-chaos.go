@@ -263,6 +263,7 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 		SetEnv("STREAM_TYPE", experimentsDetails.StreamType).
 		SetEnv("TOXIC_TYPE", experimentsDetails.ToxicType).
 		SetEnv("RESET_PEER_TIMEOUT", strconv.Itoa(experimentsDetails.ResetPeerTimeout)).
+		SetEnv("WAIT_BEFORE_ADDING_TOXIC", strconv.Itoa(experimentsDetails.WaitBeforeAddingToxic)).
 		SetEnv("TOXIC_LATENCY", strconv.Itoa(experimentsDetails.ToxicLatency)).
 		SetEnv("DISK_CONSUMPTION", strconv.Itoa(experimentsDetails.DiskConsumption)).
 		SetEnv("NETWORK_PACKET_LOSS_PERCENTAGE", strconv.Itoa(experimentsDetails.NetworkPacketLossPercentage)).

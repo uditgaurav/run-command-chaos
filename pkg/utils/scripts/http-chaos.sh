@@ -6,22 +6,22 @@ echo "PRIVATE_SSH_FILE_PATH: $PRIVATE_SSH_FILE_PATH"
 echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}"
 
 startProxyServerCommand="(toxiproxy-server > /dev/null 2>&1 &) && sleep 2"
-createProxyCommand="toxiproxy-cli create -l ${LISTEN_URL} --${STREAM_TYPE} ${STREAM_URL} proxy > /dev/null"
+createProxyCommand="toxiproxy-cli create -l ${LISTEN_URL} --${STREAM_TYPE} ${STREAM_URL} proxy && sleep ${WAIT_BEFORE_ADDING_TOXIC}"
 
-createToxicCommand="toxiproxy-cli toggle proxy && sleep ${TOTAL_CHAOS_DURATION} > /dev/null"
+createToxicCommand="toxiproxy-cli toggle proxy && sleep ${TOTAL_CHAOS_DURATION}"
 
 case $TOXIC_TYPE in
 
   toggle)
-    createToxicCommand="toxiproxy-cli toggle proxy > /dev/null && sleep ${TOTAL_CHAOS_DURATION}"
+    createToxicCommand="toxiproxy-cli toggle proxy && sleep ${TOTAL_CHAOS_DURATION}"
     ;;
 
   reset_peer)
-    createToxicCommand="toxiproxy-cli toxic add -t reset_peer -a timeout=${RESET_PEER_TIMEOUT} proxy > /dev/null && sleep ${TOTAL_CHAOS_DURATION}"
+    createToxicCommand="toxiproxy-cli toxic add -t reset_peer -a timeout=${RESET_PEER_TIMEOUT} proxy && sleep ${TOTAL_CHAOS_DURATION}"
     ;;
 
   latency)
-    createToxicCommand="toxiproxy-cli toxic add -t latency -a latency=${TOXIC_LATENCY} proxy > /dev/null && sleep ${TOTAL_CHAOS_DURATION}"
+    createToxicCommand="toxiproxy-cli toxic add -t latency -a latency=${TOXIC_LATENCY} proxy && sleep ${TOTAL_CHAOS_DURATION}"
     ;;
 
   *)

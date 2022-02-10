@@ -55,4 +55,5 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.ToxicType = types.Getenv("TOXIC_TYPE", "")
 	experimentDetails.ResetPeerTimeout, _ = strconv.Atoi(types.Getenv("RESET_PEER_TIMEOUT", ""))
 	experimentDetails.ToxicLatency, _ = strconv.Atoi(types.Getenv("TOXIC_LATENCY", ""))
+	experimentDetails.WaitBeforeAddingToxic, _ = strconv.Atoi(types.Getenv("WAIT_BEFORE_ADDING_TOXIC", ""))
 }
