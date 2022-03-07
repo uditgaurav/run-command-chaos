@@ -200,6 +200,8 @@ spec:
                               value: "latency"
                             - name: TOXIC_LATENCY
                               value: "1000"
+                            - name: WAIT_BEFORE_ADDING_TOXIC
+                              value: "10"
                             - name: PORT
                               value: "22"
                             - name: USERNAME

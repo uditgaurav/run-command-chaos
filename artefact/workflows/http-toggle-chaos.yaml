@@ -198,6 +198,8 @@ spec:
                               value: "upstream"
                             - name: TOXIC_TYPE
                               value: "toggle"
+                            - name: WAIT_BEFORE_ADDING_TOXIC
+                              value: "10"
                             - name: PORT
                               value: "22"
                             - name: USERNAME
