@@ -38,17 +38,25 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.Port, _ = strconv.Atoi(types.Getenv("PORT", "22"))
 	experimentDetails.ChaosType = types.Getenv("CHAOS_TYPE", "cpu")
 
+	// Memory-Hog Chaos
 	experimentDetails.MemoryConsumption, _ = strconv.Atoi(types.Getenv("MEMORY_CONSUMPTION", "500"))
 	experimentDetails.NumberOfWorkers, _ = strconv.Atoi(types.Getenv("NUMBER_OF_WORKERS", "4"))
 
+	// Network-Loss & Network-Latency Chaos
 	experimentDetails.NetworkLatency, _ = strconv.Atoi(types.Getenv("NETWORK_LATENCY", "2000"))
 	experimentDetails.NetworkPacketLossPercentage, _ = strconv.Atoi(types.Getenv("NETWORK_PACKET_LOSS_PERCENTAGE", "30"))
 	experimentDetails.NetworkInterface = types.Getenv("NETWORK_INTERFACE", "eth0")
+	experimentDetails.Jitter, _ = strconv.Atoi(types.Getenv("JITTER", "0"))
 
+	// Disk-fill Chaos
 	experimentDetails.FillPercentage, _ = strconv.Atoi(types.Getenv("FILL_PERCENTAGE", ""))
 	experimentDetails.VolumeMountPath = types.Getenv("VOLUME_MOUNT_PATH", "/")
 	experimentDetails.DiskConsumption, _ = strconv.Atoi(types.Getenv("DISK_CONSUMPTION", "2"))
+
+	// Node-Reboot Chaos
 	experimentDetails.RebootCommand = types.Getenv("REBOOT_COMMAND", "")
+	
+	// HTTP Chaos
 	experimentDetails.ListenUrl = types.Getenv("LISTEN_URL", "")
 	experimentDetails.StreamUrl = types.Getenv("STREAM_URL", "")
 	experimentDetails.StreamType = types.Getenv("STREAM_TYPE", "")

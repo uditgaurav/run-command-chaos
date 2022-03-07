@@ -258,6 +258,7 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails) []apiv1.En
 		SetEnv("NETWORK_LATENCY", strconv.Itoa(experimentsDetails.NetworkLatency)).
 		SetEnv("REBOOT_COMMAND", experimentsDetails.RebootCommand).
 		SetEnv("NETWORK_INTERFACE", experimentsDetails.NetworkInterface).
+		SetEnv("JITTER", strconv.Itoa(experimentsDetails.Jitter)).
 		SetEnv("LISTEN_URL", experimentsDetails.ListenUrl).
 		SetEnv("STREAM_URL", experimentsDetails.StreamUrl).
 		SetEnv("STREAM_TYPE", experimentsDetails.StreamType).
