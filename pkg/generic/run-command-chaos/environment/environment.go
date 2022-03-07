@@ -55,7 +55,7 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 
 	// Node-Reboot Chaos
 	experimentDetails.RebootCommand = types.Getenv("REBOOT_COMMAND", "")
-	
+
 	// HTTP Chaos
 	experimentDetails.ListenUrl = types.Getenv("LISTEN_URL", "")
 	experimentDetails.StreamUrl = types.Getenv("STREAM_URL", "")
