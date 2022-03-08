@@ -6,15 +6,31 @@ echo "[Info]: Starting Network Loss Chaos ..."
 
 echo "PRIVATE_SSH_FILE_PATH: $PRIVATE_SSH_FILE_PATH"
 echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}"
-echo "[Info]: Chaos Command: sudo tc qdisc replace dev ${NETWORK_INTERFACE} root netem loss ${NETWORK_PACKET_LOSS_PERCENTAGE} && sleep ${TOTAL_CHAOS_DURATION} && sudo tc qdisc delete dev ${NETWORK_INTERFACE} root"
+
+
+fault="loss ${NETWORK_PACKET_LOSS_PERCENTAGE}"
+
+chaosCommand="sudo tc qdisc replace dev ${NETWORK_INTERFACE} root netem ${fault}"
+
+if [ ! -z "$DESTINATION_IP" ]; then
+    lossCommand="sudo tc qdisc replace dev ${NETWORK_INTERFACE} root handle 1: prio && sudo tc qdisc replace dev ${NETWORK_INTERFACE} parent 1:3 netem ${fault}"
+    tc="sudo tc filter add dev ${NETWORK_INTERFACE} protocol ip parent 1:0 prio 3 u32 match ip dst ${DESTINATION_IP} flowid 1:3"
+    chaosCommand="${lossCommand} && ${tc}"
+fi
+
+revertCommand="sudo tc qdisc delete dev ${NETWORK_INTERFACE} root"
+
+command="${chaosCommand} && sleep ${TOTAL_CHAOS_DURATION} && ${revertCommand}"
+
+echo "[Info]: Chaos Command: ${command}"
 
 if [ -z "$PRIVATE_SSH_FILE_PATH" ]; then
 
     sshpass -p ${PASSWORD} ssh -o StrictHostKeyChecking=no ${USER}@${IP} -p ${PORT} -tt \
-	"sudo tc qdisc replace dev ${NETWORK_INTERFACE} root netem loss ${NETWORK_PACKET_LOSS_PERCENTAGE} && sleep ${TOTAL_CHAOS_DURATION} && sudo tc qdisc delete dev ${NETWORK_INTERFACE} root"
+	"${command}"
     
 else
-    ssh -o StrictHostKeyChecking=no -i "$PRIVATE_SSH_FILE_PATH" ${USER}@${IP} "sudo tc qdisc replace dev ${NETWORK_INTERFACE} root netem loss ${NETWORK_PACKET_LOSS_PERCENTAGE} && sleep ${TOTAL_CHAOS_DURATION} && sudo tc qdisc delete dev ${NETWORK_INTERFACE} root" 
+    ssh -o StrictHostKeyChecking=no -i "$PRIVATE_SSH_FILE_PATH" ${USER}@${IP} "${command}" 
 fi
 
 echo "[Info]: Chaos Completed ..."
