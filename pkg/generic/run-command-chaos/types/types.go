@@ -50,4 +50,7 @@ type ExperimentDetails struct {
 	ToxicLatency                  int
 	WaitBeforeAddingToxic         int
 	Jitter                        int
+	OutputFilePath				  string
+	BlockSize					  int
+	NumberOfBlocks				  int
 }

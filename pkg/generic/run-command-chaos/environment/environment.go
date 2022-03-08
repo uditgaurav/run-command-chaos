@@ -64,4 +64,10 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.ResetPeerTimeout, _ = strconv.Atoi(types.Getenv("RESET_PEER_TIMEOUT", ""))
 	experimentDetails.ToxicLatency, _ = strconv.Atoi(types.Getenv("TOXIC_LATENCY", ""))
 	experimentDetails.WaitBeforeAddingToxic, _ = strconv.Atoi(types.Getenv("WAIT_BEFORE_ADDING_TOXIC", ""))
+
+	// dd-based disk Chaos
+	experimentDetails.OutputFilePath = types.Getenv("OUTPUT_FILE_PATH", "")
+	experimentDetails.BlockSize, _ = strconv.Atoi(types.Getenv("BLOCK_SIZE", ""))
+	experimentDetails.NumberOfBlocks, _ = strconv.Atoi(types.Getenv("NUMBER_OF_BLOCKS", ""))
+
 }
