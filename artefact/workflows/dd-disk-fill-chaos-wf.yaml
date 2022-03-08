@@ -188,7 +188,7 @@ spec:
                             - name: CHAOS_TYPE
                               value: "dd-based-disk-fill"
                             - name: BLOCK_SIZE
-                              value: "2"
+                              value: "1024"
                             - name: NUMBER_OF_BLOCKS
                               value: "1"
                             - name: OUTPUT_FILE_PATH
