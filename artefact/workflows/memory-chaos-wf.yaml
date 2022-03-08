@@ -200,7 +200,7 @@ spec:
                             - name: IP
                               value: 'ec2-3-8-99-170.eu-west-2.compute.amazonaws.com'
                             - name: PRIVATE_SSH_FILE_PATH
-                              value: "/mnt/vedant-k3s-test.pem"
+                              value: ""
                         probe: []
                   annotationCheck: "false"
       outputs: {}
