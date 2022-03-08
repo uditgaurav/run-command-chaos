@@ -7,7 +7,7 @@ echo "[Info]: Starting dd process for Disk Fill chaos..."
 echo "PRIVATE_SSH_FILE_PATH: $PRIVATE_SSH_FILE_PATH"
 echo "[Info]: Connection information, IP: ${IP}, USER: ${USER}, PORT: ${PORT}"
 
-command="sudo dd if=/dev/urandom of=${OUTPUT_FILE_PATH} bs=${BLOCK_SIZE}M count=${NUMBER_OF_BLOCKS} && sleep ${TOTAL_CHAOS_DURATION} && sudo rm ${OUTPUT_FILE_PATH}" 
+command="sudo dd if=/dev/urandom of=${OUTPUT_FILE_PATH} bs=${BLOCK_SIZE}M count=${NUMBER_OF_BLOCKS} iflag=fullblock && sleep ${TOTAL_CHAOS_DURATION} && sudo rm ${OUTPUT_FILE_PATH}" 
 
 echo "[Info]: Chaos Command: ${command}"
 

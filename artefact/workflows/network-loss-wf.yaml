@@ -185,12 +185,12 @@ spec:
                           env:
                             - name: TOTAL_CHAOS_DURATION
                               value: "120"
-                            - name: CPU_CORES
-                              value: "2"
                             - name: CHAOS_TYPE
                               value: "network-loss"
                             - name: NETWORK_PACKET_LOSS_PERCENTAGE
                               value: "30"
+                            - name: DESTINATION_IP
+                              value: ""
                             - name: NETWORK_INTERFACE
                               value: "eth0"
                             - name: PORT
@@ -226,5 +226,5 @@ spec:
     runAsUser: 1000
     runAsNonRoot: true
 status:
-  ? startedAt
-  ? finishedAt
+  startedAt:
+  finishedAt:
