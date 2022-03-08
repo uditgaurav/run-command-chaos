@@ -47,7 +47,7 @@ func GetENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.NetworkPacketLossPercentage, _ = strconv.Atoi(types.Getenv("NETWORK_PACKET_LOSS_PERCENTAGE", "30"))
 	experimentDetails.NetworkInterface = types.Getenv("NETWORK_INTERFACE", "eth0")
 	experimentDetails.Jitter, _ = strconv.Atoi(types.Getenv("JITTER", "0"))
-	experimentDetails.DestinationIP = types.Getenv("DESTINATION_IP","")
+	experimentDetails.DestinationIP = types.Getenv("DESTINATION_IP", "")
 
 	// Disk-fill Chaos
 	experimentDetails.FillPercentage, _ = strconv.Atoi(types.Getenv("FILL_PERCENTAGE", ""))

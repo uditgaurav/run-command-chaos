@@ -53,5 +53,5 @@ type ExperimentDetails struct {
 	OutputFilePath                string
 	BlockSize                     int
 	NumberOfBlocks                int
-	DestinationIP				  string
+	DestinationIP                 string
 }
